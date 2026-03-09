@@ -1,0 +1,80 @@
+plugins {
+    id "com.android.application"
+    // Kotlin plugin da nawa syntax (recommended)
+    id "org.jetbrains.kotlin.android"
+    // Flutter plugin
+    id "dev.flutter.flutter-gradle-plugin"
+    // Google Services (Firebase layi jaruri)
+    id 'com.google.gms.google-services'
+}
+
+// FIX: Use java.util.Properties instead of just Properties
+def localProperties = new java.util.Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+android {
+    namespace = "com.example.aura"
+    compileSdk = 34 // (Latest Stable API) - Flutter.compileSdkVersion di jagah direct number use kita taaki error na aave
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId = "com.example.aura"
+        minSdkVersion flutter.minSdkVersion // (Firebase Auth layi kam se kam 21/23 chahida hunda hai)
+        targetSdkVersion 34 // (Latest Stable)
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
+        multiDexEnabled true // (Firebase layi jaruri)
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    // Firebase BoM (Bill of Materials) - Version management layi
+    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+
+    // Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Firebase Analytics
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // Core Libraries
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}

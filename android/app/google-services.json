@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "307738953807",
+    "project_id": "aura-watch1",
+    "storage_bucket": "aura-watch1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307738953807:android:9e77d8f6269a6e0151023a",
+        "android_client_info": {
+          "package_name": "com.example.aura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZxN62koIbxrW6yRDQdkHvVZXPzMXwv5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
